@@ -275,6 +275,9 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'iamcco/markdown-preview.nvim',
+  },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -662,8 +665,28 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*.go',
+        callback = function()
+          local params = vim.lsp.util.make_range_params()
+          params.context = { only = { 'source.organizeImports' } }
+          local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 1000)
+          for _, res in pairs(result or {}) do
+            for _, action in pairs(res.result or {}) do
+              if action.edit then
+                vim.lsp.util.apply_workspace_edit(action.edit, 'utf-8')
+              end
+            end
+          end
+        end,
+      })
+
       local servers = {
         -- clangd = {},
+        dockerls = {},
+        marksman = {},
+        docker_compose_language_service = {},
         gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -753,13 +776,14 @@ require('lazy').setup({
           return nil
         else
           return {
-            timeout_ms = 500,
+            timeout_ms = 3000,
             lsp_format = 'fallback',
           }
         end
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        markdown = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -967,9 +991,9 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
