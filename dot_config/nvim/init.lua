@@ -688,8 +688,13 @@ require('lazy').setup({
         marksman = {},
         docker_compose_language_service = {},
         gopls = {},
+        terraformls = {},
+        bashls = {},
         -- pyright = {},
         -- rust_analyzer = {},
+        -- ansiblels = {},
+        -- ^npm i -g @ansible/ansible-language-server
+        --
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -698,6 +703,17 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+              schemas = {
+                -- schema store or Kubernetes
+                ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+              },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = { ... },
