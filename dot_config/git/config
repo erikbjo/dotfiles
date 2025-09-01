@@ -1,0 +1,20 @@
+[includeIf "gitdir:~/repos/work/"]
+  path = ~/.config/git/work.gitconfig
+
+[includeIf "gitdir:*/chezmoi/"]
+  path = ~/.config/git/personal.gitconfig
+
+[includeIf "gitdir:~/repos/personal/"]
+  path = ~/.config/git/personal.gitconfig
+
+[core]
+  editor = nvim
+  autocrlf = input
+  pager = less
+  whitespace = error
+
+[color]
+  ui = auto
+
+[pull]
+  ff = only
