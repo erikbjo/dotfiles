@@ -1,7 +1,7 @@
 [user]
   name = Erik Bjørnsen
   email = bjornsen.erik@gmail.com
-  signingkey = /Users/erik.bjornsen/.ssh/workmac.pub
+  signingkey = ~/.ssh/workmac.pub
 
 [commit]
   gpgsign = true

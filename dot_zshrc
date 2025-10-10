@@ -109,6 +109,7 @@ source $ZSH/oh-my-zsh.sh
 alias lg="lazygit"
 alias ols="ls -la --color | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\" %0o \",k);print}'"
 alias ll='ls -alF'
+alias teamsbackground='cd ~/Library/Containers/com.microsoft.teams2/Data/Library/Application Support/Microsoft/MSTeams/Backgrounds'
 
 function config() {
   if [ -d "$HOME/.config/$1" ]; then
